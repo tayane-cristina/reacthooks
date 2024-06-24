@@ -18,7 +18,7 @@ const UseState = () => {
         e.preventDefault()
 
         setInputName(displayName)
-        setDisplayName("")
+        
     }
 
   return (
@@ -49,7 +49,6 @@ const UseState = () => {
             <input placeholder='Your name here' onChange={(e) => setDisplayName(e.target.value)}></input>
             <button type='submit'>Change name</button>
         </form>
-      
       <hr/>
     </div>
   );
