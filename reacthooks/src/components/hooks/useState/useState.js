@@ -22,7 +22,7 @@ const UseState = () => {
     }
 
   return (
-    <div>
+    <div className='principal-div'>
         
      <h3>UseState</h3>
 

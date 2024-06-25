@@ -53,7 +53,7 @@ const UseReducer = () => {
     console.log(tasks)
 
   return (
-    <div>
+    <div className='principal-div'>
         <h4>UseReducer</h4>
     {/*useReducer in a basic case*/}
     <p><strong>Neste exemplo vamos ver o useReducer sendo utilizado em um caso básico</strong></p>
@@ -80,7 +80,6 @@ const UseReducer = () => {
     {tasks.map((task) => (
         <li key={task.id} onDoubleClick={() => removeTask(task.id)} >{task.text}</li>
     ))}
-    
     <hr />
     </div>
   );
