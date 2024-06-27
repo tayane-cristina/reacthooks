@@ -6,8 +6,6 @@ import { useReducer, useState } from 'react';
 
 const UseReducerTest = () => {
 
-  const [productAdded, setProductAdded] = useState(1)
-
   //Está constante deve guardar o valor inicial do meu reducer.
   const initialProducts = [
     {id: 1, name: "Cubo mágico", price: 10.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa4WrToATYt59zKe9-v5C6J5NcVOScGB5PQQ&s"},
@@ -19,42 +17,23 @@ const UseReducerTest = () => {
 
   const [productsInKart, setProductsInKart] = useState([]);
 
-  const [theProduct, setTheProduct] = useState({name:"", price:0, image:""})
-
   //Está constante deve guardar a lógica que será realizada pelo action, quando houver um dispatch.
   const productReducer = (state, action) => {
     switch (action.type) {
       case "ADD":
-        const newAddProduct = {
-          id: 1,
-          name: "produto",
-          price: 10.00,
-          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkDDvJiqGSLuOxqkbf_-gvZl6mLB-AfDC3Mg&s"
-        }
-        
-        setProductsInKart(prevProducts => [...productsInKart, newAddProduct]);
-
-      case "DELET":
-
-      case "SAVE":
-
+        setProductsInKart([...productsInKart, action.product]);
 
       default:
-        return state
+        return state;
     }
   };
 
   const [products, dispatchProducts] = useReducer(productReducer, initialProducts)
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    dispatchProducts({type: "ADD"})
-
-    console.log(e.target.value)
+  const handleAddToCart = (product) => {
+    
+    dispatchProducts({type: "ADD", product})
   }
-
-
 
   return (
     <div className='principal-div'>
@@ -62,11 +41,11 @@ const UseReducerTest = () => {
       <ul className='products-list'>
         {products.map((product) => (
           <li key={product.id} className='product-kart'>
-            <img className="product-image" src={product.image} alt={product.name} />
+            <img className="product-image" src={product.image} alt={`imagem do produto ${product.name}`} />
             <p><strong>{product.name}</strong></p>
-            <p>PREÇO: R${product.price}</p>
+            <p>PREÇO: R${product.price.toFixed(2)}</p>
             <section className='product-status'>
-              <button className='add-at-kart' onClick={handleSubmit}>Adicionar ao carrinho</button>
+              <button className='add-at-kart' onClick={() => handleAddToCart(product)}>Adicionar ao carrinho</button>
               <img 
               className='img-save' 
               src='https://img.icons8.com/?size=50&id=581&format=png' 
@@ -77,22 +56,25 @@ const UseReducerTest = () => {
           </li>
         ))}
       </ul>
-
-      <p><strong>Produtos no carrinho:</strong></p>
-      <ul>
-        {productsInKart.map((product) => (
-          <li key={product.id}>
-            <img className="product-image" src={product.image} alt={product.name} />
-            <p><strong>{product.name}</strong></p>
-            <p>PREÇO: R${product.price}</p>
-            <section className='amount-products'>
-              <button className='addOneMore'>+</button>
-              <p>{productAdded}</p>
-              <button className='removeOne'>-</button>
-            </section>
-          </li>
-        ))}
-      </ul>
+      
+      <div className='show-products-in-the-cart'>
+        <p><strong>Produtos no carrinho:</strong></p>
+        <ul>
+          {productsInKart.map((product) => (
+            <li key={product.id}>
+              <img className="product-image" src={product.image} alt={product.name} />
+              <p><strong>{product.name}</strong></p>
+              <p>PREÇO: R${product.price}</p>
+              <section className='amount-products'>
+                <button className='addOneMore'>+</button>
+                <p>1</p>
+                <button className='removeOne'>-</button>
+              </section>
+            </li>
+          ))}
+        </ul>
+      </div>
+     
     </div>
   );
 };
