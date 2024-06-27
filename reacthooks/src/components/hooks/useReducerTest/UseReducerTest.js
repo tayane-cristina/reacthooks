@@ -17,7 +17,7 @@ const UseReducerTest = () => {
     {id: 5, name: "Blocos", price: 1.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTArZhXHMhiM3gFNrFmsmFq2KL60HIRYjhPgw&s"},
   ];
 
-  const productsInKart = []
+  const [productsInKart, setProductsInKart] = useState([]);
 
   const [theProduct, setTheProduct] = useState({name:"", price:0, image:""})
 
@@ -26,10 +26,13 @@ const UseReducerTest = () => {
     switch (action.type) {
       case "ADD":
         const newAddProduct = {
-          
+          id: 1,
+          name: "produto",
+          price: 10.00,
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkDDvJiqGSLuOxqkbf_-gvZl6mLB-AfDC3Mg&s"
         }
         
-        return [...productsInKart, newAddProduct]
+        setProductsInKart(prevProducts => [...productsInKart, newAddProduct]);
 
       case "DELET":
 
@@ -46,7 +49,7 @@ const UseReducerTest = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    //dispatchProducts({type: "ADD"})
+    dispatchProducts({type: "ADD"})
 
     console.log(e.target.value)
   }
@@ -63,7 +66,7 @@ const UseReducerTest = () => {
             <p><strong>{product.name}</strong></p>
             <p>PREÇO: R${product.price}</p>
             <section className='product-status'>
-              <button className='add-at-kart'>Adicionar ao carrinho</button>
+              <button className='add-at-kart' onClick={handleSubmit}>Adicionar ao carrinho</button>
               <img 
               className='img-save' 
               src='https://img.icons8.com/?size=50&id=581&format=png' 
@@ -77,16 +80,15 @@ const UseReducerTest = () => {
 
       <p><strong>Produtos no carrinho:</strong></p>
       <ul>
-
         {productsInKart.map((product) => (
           <li key={product.id}>
             <img className="product-image" src={product.image} alt={product.name} />
             <p><strong>{product.name}</strong></p>
             <p>PREÇO: R${product.price}</p>
             <section className='amount-products'>
-              <button className='addOneMore'></button>
+              <button className='addOneMore'>+</button>
               <p>{productAdded}</p>
-              <button className='removeOne'></button>
+              <button className='removeOne'>-</button>
             </section>
           </li>
         ))}
