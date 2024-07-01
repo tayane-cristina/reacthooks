@@ -52,3 +52,45 @@
     height: 40vh;
     margin-top: 10vh;
 }
+
+.show-products-in-the-cart ul {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    
+}
+
+.show-products-in-the-cart li {
+    border: 2px solid grey;
+    width: 20vw;
+}
+
+.amount-products {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.btn-amount-products{
+    border-radius: 50% ;
+    width: 35px;
+    height: 35px;
+}
+
+.trash-img {
+    width: 25px;
+    height: 25px;
+}
+
+.btn-trash {
+    border-radius: 45% ;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.special-word {
+    font-size: 30px;
+    text-align: center;
+}

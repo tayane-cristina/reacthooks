@@ -15,24 +15,36 @@ const UseReducerTest = () => {
     {id: 5, name: "Blocos", price: 1.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTArZhXHMhiM3gFNrFmsmFq2KL60HIRYjhPgw&s"},
   ];
 
-  const [productsInKart, setProductsInKart] = useState([]);
+  const [initialCartState, setInitialCartState] = useState([]);
 
   //Está constante deve guardar a lógica que será realizada pelo action, quando houver um dispatch.
-  const productReducer = (state, action) => {
+  const cartReducer = (state, action) => {
     switch (action.type) {
-      case "ADD":
-        setProductsInKart([...productsInKart, action.product]);
+      case "ADD_TO_KART":
+      
 
+      case "DECREASE_QUANTITY":
+
+      case "REMOVE_FROM_CART":
+      
       default:
         return state;
     }
   };
 
-  const [products, dispatchProducts] = useReducer(productReducer, initialProducts)
+  const [products, dispatchProducts] = useReducer(cartReducer, initialProducts)
 
+  //HANDLE WITH THE PRODUCTS
   const handleAddToCart = (product) => {
-    
-    dispatchProducts({type: "ADD", product})
+    dispatchProducts({type: "ADD_TO_KART", payload: product})
+  };
+
+  const handleDecreaseQuantity = (productId) => {
+    dispatchProducts({type: "DECREASE_QUANTITY", payload: {id: productId}})
+  };
+
+  const handleRemoveFromCart = (productId) => {
+    dispatchProducts({type: "REMOVE_FROM_CART", payload: {id: productId}})
   }
 
   return (
@@ -60,18 +72,22 @@ const UseReducerTest = () => {
       <div className='show-products-in-the-cart'>
         <p><strong>Produtos no carrinho:</strong></p>
         <ul>
-          {productsInKart.map((product) => (
+          {initialCartState.length > 0 ? (
+            initialCartState.map((product) => (
             <li key={product.id}>
               <img className="product-image" src={product.image} alt={product.name} />
               <p><strong>{product.name}</strong></p>
               <p>PREÇO: R${product.price}</p>
               <section className='amount-products'>
-                <button className='addOneMore'>+</button>
-                <p>1</p>
-                <button className='removeOne'>-</button>
+                <button className='btn-amount-products addOneMore' onClick={() => handleDecreaseQuantity(product.id)}>+</button>
+                <p>Quantidade: {product.quantity}</p>
+                <button className='btn-amount-products removeOne'>-</button>
               </section>
+              <button className='btn-trash' onClick={() => handleRemoveFromCart(product.id)}><img className='trash-img' src='https://img.icons8.com/?size=50&id=1942&format=png' alt='trash' /></button>
             </li>
-          ))}
+          ))) : (
+            <p className='special-word'><strong>Seu carrinho está vazio</strong></p>
+          )}
         </ul>
       </div>
      
