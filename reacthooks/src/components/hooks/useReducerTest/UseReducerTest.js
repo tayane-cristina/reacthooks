@@ -7,49 +7,50 @@ import { useReducer, useState } from 'react';
 const UseReducerTest = () => {
 
   //Está constante deve guardar o valor inicial do meu reducer.
-  const initialProducts = [
-    {id: 1, name: "Cubo mágico", price: 10.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa4WrToATYt59zKe9-v5C6J5NcVOScGB5PQQ&s"},
-    {id: 2, name: "Urso de pelúcia", price: 35.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwZDVhINaLmPh-9nzs6OujGNP5-DW0uCsTdg&s"},
-    {id: 3, name: "Casinha de Boneca", price: 60.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyiVsc_dEkPWOPj8k1a4ePC_nukI9iXOXjbw&s"},
-    {id: 4, name: "Carrinho de controle remoto", price: 55.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ7vMcZltIZitBNaZBE_YwvDUilJazHbkThQ&s"},
-    {id: 5, name: "Blocos", price: 1.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTArZhXHMhiM3gFNrFmsmFq2KL60HIRYjhPgw&s"},
-  ];
+  const [initialProducts, setInitialProducts] = useState([
+    {id: 1, name: "Cubo mágico", price: 10.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa4WrToATYt59zKe9-v5C6J5NcVOScGB5PQQ&s", quantity: 1},
+    {id: 2, name: "Urso de pelúcia", price: 35.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwZDVhINaLmPh-9nzs6OujGNP5-DW0uCsTdg&s", quantity: 1},
+    {id: 3, name: "Casinha de Boneca", price: 60.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyiVsc_dEkPWOPj8k1a4ePC_nukI9iXOXjbw&s", quantity: 1},
+    {id: 4, name: "Carrinho de controle remoto", price: 55.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ7vMcZltIZitBNaZBE_YwvDUilJazHbkThQ&s", quantity: 1},
+    {id: 5, name: "Blocos", price: 1.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTArZhXHMhiM3gFNrFmsmFq2KL60HIRYjhPgw&s", quantity: 1},
+  ]);
 
-  const [initialCartState, setInitialCartState] = useState([]);
+  const [productsInKart, setProductsInKart] = useState([]);
+ 
+
 
   //Está constante deve guardar a lógica que será realizada pelo action, quando houver um dispatch.
-  const cartReducer = (state, action) => {
+  const productReducer = (state, action) => {
     switch (action.type) {
-      case "ADD_TO_KART":
+      case "ADD":
+        setProductsInKart([...productsInKart, action.product]);
+        
       
-
-      case "DECREASE_QUANTITY":
-
-      case "REMOVE_FROM_CART":
-      
+      case "ADD_MORE_PRODUCT":
+       
       default:
         return state;
     }
   };
 
-  const [products, dispatchProducts] = useReducer(cartReducer, initialProducts)
-
-  //HANDLE WITH THE PRODUCTS
+  const [products, dispatchProducts] = useReducer(productReducer, initialProducts)
+  
+  //FUNÇÔES QUE LIDAM COM OS EVENTOS:
   const handleAddToCart = (product) => {
-    dispatchProducts({type: "ADD_TO_KART", payload: product})
-  };
+    dispatchProducts({type: "ADD", product})
+  }
 
-  const handleDecreaseQuantity = (productId) => {
-    dispatchProducts({type: "DECREASE_QUANTITY", payload: {id: productId}})
-  };
+  const addMoreProducts = (id) => {
+    dispatchProducts({type: "ADD_MORE_PRODUCT", id})
+  }
 
-  const handleRemoveFromCart = (productId) => {
-    dispatchProducts({type: "REMOVE_FROM_CART", payload: {id: productId}})
+  const removeProduct = (quantity) => {
+
   }
 
   return (
     <div className='principal-div'>
-      <h3>UseReducer Test</h3>
+      <h3>Lista de Produtos</h3>
       <ul className='products-list'>
         {products.map((product) => (
           <li key={product.id} className='product-kart'>
@@ -72,22 +73,22 @@ const UseReducerTest = () => {
       <div className='show-products-in-the-cart'>
         <p><strong>Produtos no carrinho:</strong></p>
         <ul>
-          {initialCartState.length > 0 ? (
-            initialCartState.map((product) => (
+          {productsInKart.length > 0 ? (
+            productsInKart.map((product) => (
             <li key={product.id}>
               <img className="product-image" src={product.image} alt={product.name} />
               <p><strong>{product.name}</strong></p>
               <p>PREÇO: R${product.price}</p>
               <section className='amount-products'>
-                <button className='btn-amount-products addOneMore' onClick={() => handleDecreaseQuantity(product.id)}>+</button>
+                <button className='btn-amount-products addOneMore' onClick={() => addMoreProducts(product.id)}>+</button>
                 <p>Quantidade: {product.quantity}</p>
                 <button className='btn-amount-products removeOne'>-</button>
               </section>
-              <button className='btn-trash' onClick={() => handleRemoveFromCart(product.id)}><img className='trash-img' src='https://img.icons8.com/?size=50&id=1942&format=png' alt='trash' /></button>
             </li>
           ))) : (
-            <p className='special-word'><strong>Seu carrinho está vazio</strong></p>
+            <p className='special-word'><strong>Seu carrinho esta vazio</strong></p>
           )}
+          
         </ul>
       </div>
      

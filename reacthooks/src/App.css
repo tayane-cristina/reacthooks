@@ -6,3 +6,16 @@
   height: 50vh;
   padding: 10px;
 }
+
+ul {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+}
+
+li {
+  list-style: circle;
+  margin: 10px;
+  padding: 10px;
+  font-size: 25px;
+}

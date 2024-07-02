@@ -64,6 +64,8 @@
 .show-products-in-the-cart li {
     border: 2px solid grey;
     width: 20vw;
+    cursor: pointer;
+    list-style: none;
 }
 
 .amount-products {
