@@ -27,6 +27,9 @@ const UseReducerTest = () => {
         
       
       case "ADD_MORE_PRODUCT":
+        setInitialProducts(prevProducts => 
+          prevProducts.map((product) => product.id === action.id ? {...product, quantity: product.quantity + 1} : product)
+        )
        
       default:
         return state;
@@ -42,6 +45,7 @@ const UseReducerTest = () => {
 
   const addMoreProducts = (id) => {
     dispatchProducts({type: "ADD_MORE_PRODUCT", id})
+    console.log("O butão está funcionando")
   }
 
   const removeProduct = (quantity) => {
@@ -75,7 +79,7 @@ const UseReducerTest = () => {
         <ul>
           {productsInKart.length > 0 ? (
             productsInKart.map((product) => (
-            <li key={product.id}>
+            <li className='li-products-in-cart' key={product.id}>
               <img className="product-image" src={product.image} alt={product.name} />
               <p><strong>{product.name}</strong></p>
               <p>PREÇO: R${product.price}</p>

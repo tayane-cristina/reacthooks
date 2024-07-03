@@ -7,27 +7,36 @@ import UseState from './components/hooks/useState/useState';
 import UseReducer from './components/hooks/useReducer/UseReducer';
 import UseReducerTest from './components/hooks/useReducerTest/UseReducerTest';
 import Navlinks from './components/navlinks/Navlinks';
-import UseEffect from './components/hooks/useEffect/UseEffect';
+import HookUseEffect from './components/hooks/useEffect/HookUseEffect';
+
+//UseContext
+import { HookUseContext } from './components/hooks/useContext/HookUseContext';
+import { ThemeProvider } from './components/hooks/useContext/ThemeProvider';
 
 function App() {
   return (
-    <div className="App">
-      <h1>React Hooks</h1>
+    <ThemeProvider>
+      <HookUseContext>
+        <div className="App">
+          <h1>React Hooks</h1>
 
-      <BrowserRouter>
-      <Navlinks />
-        <Routes>
-          <Route element={<Home />} path='/'></Route>
-          <Route element={<About />} path='/about'></Route>
+          <BrowserRouter>
+            <Navlinks />
+            <Routes>
+            <Route element={<Home />} path='/'></Route>
+            <Route element={<About />} path='/about'></Route>
 
-          {/*Hooks*/}
-          <Route element={<UseState />} path='/usestate'></Route>
-          <Route element={<UseReducer />} path='/usereducer'></Route>
-          <Route element={<UseReducerTest />} path='/usereducertest'></Route>
-          <Route element={<UseEffect />} path='/useeffect'></Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+            {/*Hooks*/}
+            <Route element={<UseState />} path='/usestate'></Route>
+            <Route element={<UseReducer />} path='/usereducer'></Route>
+            <Route element={<UseReducerTest />} path='/usereducertest'></Route>
+            <Route element={<HookUseEffect />} path='/useeffect'></Route>
+            </Routes>
+          </BrowserRouter>
+        </div>
+      </HookUseContext>
+    </ThemeProvider>
+   
   );
 }
 
